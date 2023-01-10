@@ -825,10 +825,6 @@ namespace sick_scan
       imuMsg_.orientation_covariance[8] = 0;
 
     }
-    if (true == bRet)
-    {
-      this->commonPtr->imuScan_pub_.publish(imuMsg_);
-    }
     return (exitCode);
 
   }

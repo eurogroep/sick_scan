@@ -362,41 +362,11 @@ namespace sick_scan
 #endif
     // datagram publisher (only for debug)
     ros::NodeHandle pn("~");
-    pn.param<bool>("publish_datagram", publish_datagram_, false);
-    if (publish_datagram_)
-    {
-      datagram_pub_ = nh_.advertise<std_msgs::String>("datagram", 1000);
-    }
-    std::string cloud_topic_val = "cloud";
-    pn.getParam("cloud_topic", cloud_topic_val);
-    std::string frame_id_val = cloud_topic_val;
-    pn.getParam("frame_id", frame_id_val);
 
+    pn.param<std::string>("frame_id", "scan");
 
-    cloud_marker_ = 0;
-    publish_lferec_ = false;
-    publish_lidoutputstate_ = false;
     const std::string scannername = parser_->getCurrentParamPtr()->getScannerName();
-    if (parser_->getCurrentParamPtr()->getUseEvalFields() == USE_EVAL_FIELD_TIM7XX_LOGIC || parser_->getCurrentParamPtr()->getUseEvalFields() == USE_EVAL_FIELD_LMS5XX_LOGIC)
-    {
-      lferec_pub_ = nh_.advertise<sick_scan::LFErecMsg>(scannername + "/lferec", 100);
-      lidoutputstate_pub_ = nh_.advertise<sick_scan::LIDoutputstateMsg>(scannername + "/lidoutputstate", 100);
-      publish_lferec_ = true;
-      publish_lidoutputstate_ = true;
-      cloud_marker_ = new sick_scan::SickScanMarker(&nh_, scannername + "/marker", frame_id_val); // "cloud");
-    }
 
-    // Pointcloud2 publisher
-    //
-
-
-    ROS_INFO("Publishing laserscan-pointcloud2 to %s", cloud_topic_val.c_str());
-    cloud_pub_ = nh_.advertise<sensor_msgs::PointCloud2>(cloud_topic_val, 100);
-
-    imuScan_pub_ = nh_.advertise<sensor_msgs::Imu>("imu", 100);
-
-
-    Encoder_pub = nh_.advertise<sick_scan::Encoder>("encoder", 100);
     // scan publisher
     pub_ = nh_.advertise<sensor_msgs::LaserScan>("scan", 1000);
 
@@ -2869,15 +2839,6 @@ namespace sick_scan
 
       ROS_DEBUG_STREAM("SickScanCommon::loopOnce: received " << actual_length << " byte data " << DataDumper::binDataToAsciiString(&receiveBuffer[0], std::min(32, actual_length)) << " ... ");
 
-
-      if (publish_datagram_)
-      {
-        std_msgs::String datagram_msg;
-        datagram_msg.data = std::string(reinterpret_cast<char *>(receiveBuffer));
-        datagram_pub_.publish(datagram_msg);
-      }
-
-
       if (verboseLevel > 0)
       {
         dumpDatagramForDebugging(receiveBuffer, actual_length);
@@ -2928,11 +2889,6 @@ namespace sick_scan
         sick_scan::LIDoutputstateMsg outputstate_msg;
         if (sick_scan::SickScanMessages::parseLIDoutputstateMsg(recvTimeStamp, receiveBuffer, actual_length, useBinaryProtocol, scanner_name, outputstate_msg))
         {
-          // Publish LIDoutputstate message
-          if(publish_lidoutputstate_)
-          {
-            lidoutputstate_pub_.publish(outputstate_msg);
-          }
           if(cloud_marker_)
           {
             cloud_marker_->updateMarker(outputstate_msg, eval_field_logic);
@@ -2969,11 +2925,6 @@ namespace sick_scan
         EVAL_FIELD_SUPPORT eval_field_logic = parser_->getCurrentParamPtr()->getUseEvalFields(); // == USE_EVAL_FIELD_LMS5XX_LOGIC
         if (sick_scan::SickScanMessages::parseLFErecMsg(recvTimeStamp, receiveBuffer, actual_length, useBinaryProtocol, eval_field_logic, scanner_name, lferec_msg))
         {
-          // Publish LFErec message
-          if(publish_lferec_)
-          {
-            lferec_pub_.publish(lferec_msg);
-          }
           if(cloud_marker_)
           {
             cloud_marker_->updateMarker(lferec_msg, eval_field_logic);
@@ -3765,10 +3716,6 @@ namespace sick_scan
 
                 }
 #ifndef _MSC_VER
-                if (parser_->getCurrentParamPtr()->getEncoderMode() >= 0 && FireEncoder == true)//
-                {
-                  Encoder_pub.publish(EncoderMsg);
-                }
                 if (numOfLayers > 4)
                 {
                   sendMsg = false; // too many layers for publish as scan message. Only pointcloud messages will be pub.
@@ -3959,13 +3906,7 @@ namespace sick_scan
 
               if (shallIFire) // shall i fire the signal???
               {
-                if (config_.cloud_output_mode == 0)
-                {
-                  // standard handling of scans
-                  cloud_pub_.publish(cloud_);
-
-                }
-                else if (config_.cloud_output_mode == 2)
+                if (config_.cloud_output_mode == 2)
                 {
                   // Following cases are interesting:
                   // LMS5xx: seq is always 0 -> publish every scan
@@ -4050,9 +3991,6 @@ namespace sick_scan
                       partOff += maxAvail * partialCloud.point_step;
                     }
                     assert(partialCloud.data.size() == partialCloud.width * partialCloud.point_step);
-
-
-                    cloud_pub_.publish(partialCloud);
 #if 0
                     memcpy(&(partialCloud.data[0]), &(cloud_.data[0]) + i * cloud_.point_step, cloud_.point_step * numPartialShots);
                     cloud_pub_.publish(partialCloud);
