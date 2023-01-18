@@ -2,8 +2,8 @@
 Changelog for package sick_scan
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.0.0
+-------------------
 * Merge pull request `#2 <https://github.com/eurogroep/sick_scan/issues/2>`_ from eurogroep/feat/update-readme
   Update readme + remove unused files
 * update description

@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>sick_scan</name>
-  <version>1.10.1</version>
+  <version>2.0.0</version>
   <description>
     A ROS driver for the SICK TiM and SICK MRS series of lidars.
     This package is based on the original sick_tim-repository of Martin Günther et al.
   </description>
 
-  <maintainer email="michael.lehning@lehning.de">Michael Lehning</maintainer>
+  <maintainer email="rein.appeldoorn@lowpad.com">Rein Appeldoorn</maintainer>
   <author email="michael.lehning@lehning.de">Michael Lehning</author>
   <author email="ros@jochen.sprickerhof.de">Jochen Sprickerhof</author>
   <author email="martin.guenther@dfki.de">Martin Günther</author>
