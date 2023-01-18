@@ -55,7 +55,7 @@ rosrun sick_scan sick_generic_caller __name:=sick_tim_7xxS _hostname:=10.39.46.2
   Frame id used for the published data (default:`"laser"`)
 
 - `auto_reboot`
-  Frame id used for the published data (default:`true`)
+  If true reboot laser if it reports an error, false otherwise (default:`true`)
 
 - `timelimit`
   Timelimit in [sec] for max. wait time of incoming sensor reply (default:`5.0`)
