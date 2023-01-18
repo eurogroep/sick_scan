@@ -6,7 +6,7 @@ This stack provides a ROS driver for the SICK lidar sensors mentioned in the fol
 
 This driver should work with all of the following products.
 
-ROS Device Driver for SICK lidar and radar sensors - supported scanner types:\
+ROS Device Driver for SICK lidar and radar sensors - supported scanner types:
 
 | **device name**    |  **part no.**                                                                                                                | **description**                                | **tested?**     |
 |--------------------|------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------|:---------------:|
@@ -18,7 +18,7 @@ Use the following command to start ROS node:
 
 - For TiM771S:
 ```bash
-rosrun sick_scan sick_generic_caller __name:=sick_tim_7xxS _hostname:=10.39.46.23
+rosrun sick_scan sick_generic_caller __name:=sick_tim_7xxS _hostname:=10.39.46.23 _scanner_type:=sick_tim_7xxS
 ```
 
 ### Common parameters
@@ -28,40 +28,37 @@ rosrun sick_scan sick_generic_caller __name:=sick_tim_7xxS _hostname:=10.39.46.2
   between the various scanner properties within the software code.
 
 - `hostname`
-  IP-address of the scanner (default: 192.168.0.1)
+  IP-address of the scanner (default:`192.168.0.1`)
 
 - `port`
-  IP-port of the scanner (default: 2112)
+  IP-port of the scanner (default:`2112`)
 
 - `min_ang`
-  Start angle in [rad]
+  Start angle in [rad] (default:`-3.14`)
 
 - `max_ang`
-  End angle in [rad]
+  End angle in [rad] (default:`3.14`)
 
 - `use_binary_protocol`
-  Switch between SOPAS Binary and SOPAS ASCII protocol
+  Switch between SOPAS Binary and SOPAS ASCII protocol (default:`true`)
 
 - `intensity`
-  Enable or disable transport of intensity values
+  Enable or disable transport of intensity values (default:`true`)
 
 - `intensity_resolution_16bit`
-  If true, the intensity values is transferred as 16 bit value. If false, as 8 bit value.
+  If true, the intensity values is transferred as 16 bit value. If false, as 8 bit value. (default:`true`)
 
 - `min_intensity`
-  If min_intensity > 0, all range values in a LaserScan message are set to infinity, if their intensity value is below min_intensity
+  If min_intensity > 0, all range values in a LaserScan message are set to infinity, if their intensity value is below min_intensity (default:`0.0`)
 
 - `frame_id`
-  Frame id used for the published data
+  Frame id used for the published data (default:`"laser"`)
 
-
-### Further useful parameters and features
+- `auto_reboot`
+  Frame id used for the published data (default:`true`)
 
 - `timelimit`
-  Timelimit in [sec] for max. wait time of incoming sensor reply
-
-- `sw_pll_only_publish`
-  If true, the internal Software PLL is forced to sync the scan generation time stamp to a system timestamp
+  Timelimit in [sec] for max. wait time of incoming sensor reply (default:`5.0`)
 
 - **Field monitoring**: The **TiM7xxS** families have [extended settings for field monitoring](./doc/field_monitoring_extensions.md).
 
