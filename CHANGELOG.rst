@@ -2,6 +2,22 @@
 Changelog for package sick_scan
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#2 <https://github.com/eurogroep/sick_scan/issues/2>`_ from eurogroep/feat/update-readme
+  Update readme + remove unused files
+* update description
+* resolve comments
+* Update readme + remove unused files
+* chore: Cleanup (`#1 <https://github.com/eurogroep/sick_scan/issues/1>`_)
+  * chore: Cleanup
+  * delete publishers
+* Discontinuation notice added
+* Merge pull request `#162 <https://github.com/eurogroep/sick_scan/issues/162>`_ from mateuszcierpikowski/fix/infinite_loop
+  Correctly interrupt while-loop
+* correctly interrupt a while-loop if runState is scanner_finalize or other invalid state
+* Contributors: James Burton, LKSeng, Michael Lehning, Rein Appeldoorn, Yannick de Hoop, mcierpikowski, rostest
+
 1.12.1
 -------------------
 * Corrected angle shift parameter for LMS-4xxx
