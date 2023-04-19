@@ -2,8 +2,8 @@
 Changelog for package sick_scan
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.1.0 (2023-04-19)
+------------------
 * feat: Read firmware version (`#3 <https://github.com/eurogroep/sick_scan/issues/3>`_)
 * Contributors: Yannick de Hoop
 
