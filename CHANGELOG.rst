@@ -2,6 +2,11 @@
 Changelog for package sick_scan
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* feat: Read firmware version (`#3 <https://github.com/eurogroep/sick_scan/issues/3>`_)
+* Contributors: Yannick de Hoop
+
 2.0.0
 -------------------
 * Merge pull request `#2 <https://github.com/eurogroep/sick_scan/issues/2>`_ from eurogroep/feat/update-readme
